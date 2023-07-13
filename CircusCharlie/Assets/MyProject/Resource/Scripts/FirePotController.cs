@@ -2,21 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RingController : MonoBehaviour
+public class FirePotController : MonoBehaviour
 {
-    public float ringSpeed = 0f;
+    public float potSpeed = 0f;
     public float speed = 0f;
 
     void Start()
     {
-
+        
     }
 
     void Update()
     {
         if (!GameManager.instance.isGameOver)
         {
-            transform.Translate(Vector3.left * ringSpeed * Time.deltaTime);
+            transform.Translate(Vector3.left * potSpeed * Time.deltaTime);
 
             if (Input.GetKey(KeyCode.RightArrow))
             {

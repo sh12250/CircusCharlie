@@ -660,7 +660,7 @@ TextureImporter:
         x: 780
         y: 508
         width: 96
-        height: 116
+        height: 124
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -675,14 +675,14 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FirPot2
+      name: FirePot2
       rect:
         serializedVersion: 2
         x: 884
         y: 508
         width: 96
         height: 124
-      alignment: 0
+      alignment: 9
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
@@ -2723,8 +2723,8 @@ TextureImporter:
       CircusCharlie_Sprites_9: 308342913
       Death_Left: 727097094
       Death_Right: 1834931636
-      FirPot2: 1022614246
       FirePot1: -939839084
+      FirePot2: 1022614246
       FireRing1_Left: -855826465
       FireRing1_Right: 1861158160
       FireRing2_Left: -309708215

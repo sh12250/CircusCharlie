@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private Animator pAnimator = default;
     private Animator lAnimator = default;
 
+    int score = 0;
     void Start()
     {
         pAnimator = player.GetComponent<Animator>();
@@ -29,12 +30,12 @@ public class PlayerController : MonoBehaviour
             Jump();
         }
 
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.RightArrow))
         {
             pAnimator.SetBool("isMove", true);
             lAnimator.SetBool("isRun", true);
         }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        else if (Input.GetKey(KeyCode.LeftArrow))
         {
             pAnimator.SetBool("isMove", true);
             lAnimator.SetBool("isBack", true);
@@ -73,6 +74,21 @@ public class PlayerController : MonoBehaviour
 
         pAnimator.SetBool("isMove", false);
         lAnimator.SetBool("isJump", false);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag.Equals("Dead"))
+        {
+            Die();
+        }
+
+        if (collision.tag.Equals("Score"))
+        {
+            score += 50;
+
+            GFunc.Log(score);
+        }
     }
 
     private void Jump()
