@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Animations;
 
 public class PlayerController : MonoBehaviour
 {
@@ -23,7 +22,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Z) && jumpCount < 1)
+        if (Input.GetKeyDown(KeyCode.Z) && jumpCount < 1)
         {
             jumpCount += 1;
 
@@ -60,16 +59,19 @@ public class PlayerController : MonoBehaviour
 
         playerRigid.velocity = Vector2.zero;
 
-        //playerAudio.clip = deathClip;
-        //playerAudio.Play();
-
-        //isDead = true;
-
-        //GameManager.instance.OnPlayerDead();
+        GameManager.instance.GameOver();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.collider.tag.Equals("Finish"))
+        {
+            pAnimator.SetTrigger("Win");
+            return;
+        }
+
+        GameManager.instance.AddScore(score);
+        score = 0;
         jumpCount = 0;
 
         pAnimator.SetBool("isMove", false);
@@ -83,11 +85,17 @@ public class PlayerController : MonoBehaviour
             Die();
         }
 
-        if (collision.tag.Equals("Score"))
+        if (collision.tag.Equals("Ring"))
         {
             score += 50;
-
-            GFunc.Log(score);
+        }
+        if (collision.tag.Equals("Pot"))
+        {
+            score += 150;
+        }
+        if (collision.tag.Equals("Gold"))
+        {
+            score += 500;
         }
     }
 

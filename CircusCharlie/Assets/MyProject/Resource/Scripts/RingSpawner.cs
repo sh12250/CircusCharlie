@@ -6,6 +6,7 @@ public class RingSpawner : MonoBehaviour
 {
     public GameObject bigRingPrefab = default;
     public GameObject ringPrefab = default;
+    public GameObject goldPrefab = default;
 
     public float timeBetSpawnMin = 0.25f;
     public float timeBetSpawnMax = 2.25f;
@@ -15,6 +16,7 @@ public class RingSpawner : MonoBehaviour
 
     public int count = 5;
     public GameObject[] rings;
+    public GameObject bonusGold;
     private int curIdx = 0;
 
     private Vector2 poolPosition = new Vector2(0, 25f);
@@ -25,6 +27,7 @@ public class RingSpawner : MonoBehaviour
         rings = new GameObject[count];
 
         rings[0] = Instantiate(ringPrefab, new Vector2(xPos, 0), Quaternion.identity);
+        bonusGold = Instantiate(goldPrefab, new Vector2(xPos, -0.5f), Quaternion.identity, rings[0].transform);
 
         for (int i = 1; i < count; i++)
         {
@@ -61,13 +64,13 @@ public class RingSpawner : MonoBehaviour
                 }
                 else
                 {
-                    rings[curIdx].transform.position = new Vector2(rings[idx].transform.position.x + Random.Range(0, xPos), 0);
+                    rings[curIdx].transform.position = new Vector2(rings[idx].transform.position.x + Random.Range(0.5f, xPos), 0);
                 }
 
                 if(curIdx == 0)
                 {
-                    //RingSpawner rSpawner = FindObjectOfType<FoodSpawner>();
-                    //rSpawner.SpawnFood(rings[curIdx]);
+                    GoldController goldCon = bonusGold.GetComponent<GoldController>();
+                    goldCon.ActivateGold();
                 }
 
                 curIdx += 1;
