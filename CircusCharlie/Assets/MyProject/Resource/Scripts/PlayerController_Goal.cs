@@ -2,26 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController_Goal : MonoBehaviour
 {
     public GameObject player = default;
     public GameObject lion = default;
     public Rigidbody2D playerRigid = default;
+    public float speed = 0f;
     public float jumpForce = 0f;
     public int jumpCount = 0;
 
     public int score = 0;
-    public int detect = 0;
-
-    public float time = 0f;
-
-    public bool isDead = false;
 
     private Animator pAnimator = default;
     private Animator lAnimator = default;
 
-
-    void Start()
+    private void Awake()
     {
         pAnimator = player.GetComponent<Animator>();
         lAnimator = lion.GetComponent<Animator>();
@@ -40,11 +35,13 @@ public class PlayerController : MonoBehaviour
         {
             pAnimator.SetBool("isMove", true);
             lAnimator.SetBool("isRun", true);
+            transform.Translate(Vector3.right * speed * Time.deltaTime);
         }
         else if (Input.GetKey(KeyCode.LeftArrow))
         {
             pAnimator.SetBool("isMove", true);
             lAnimator.SetBool("isBack", true);
+            transform.Translate(Vector3.left * speed * Time.deltaTime);
         }
 
         if (Input.GetKeyUp(KeyCode.RightArrow))
@@ -57,34 +54,18 @@ public class PlayerController : MonoBehaviour
             pAnimator.SetBool("isMove", false);
             lAnimator.SetBool("isBack", false);
         }
-
-        if (detect == 16)
-        {
-            PlayerController_Goal pCon_Goal = gameObject.GetComponent<PlayerController_Goal>();
-            pCon_Goal.enabled = true;
-
-            PlayerController pCon = gameObject.GetComponent<PlayerController>();
-            pCon.enabled = false;
-        }
-    }
-
-    private void Die()
-    {
-        pAnimator.SetTrigger("Die");
-        lAnimator.SetTrigger("Die");
-
-        playerRigid.gravityScale = 0;
-
-        playerRigid.velocity = Vector2.zero;
-
-        isDead = true;
-        GameManager.instance.isPlayerDead = isDead;
-
-        enabled = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.collider.tag.Equals("Finish"))
+        {
+            pAnimator.SetTrigger("Win");
+            score += GameManager.instance.bonusNum;
+            GameManager.instance.bonusNum = 0;
+            return;
+        }
+
         GameManager.instance.AddScore(score);
         score = 0;
         jumpCount = 0;
@@ -107,12 +88,23 @@ public class PlayerController : MonoBehaviour
         if (collision.tag.Equals("Pot"))
         {
             score += 150;
-            detect += 1;
         }
         if (collision.tag.Equals("Gold"))
         {
             score += 500;
         }
+    }
+    private void Die()
+    {
+        pAnimator.SetTrigger("Die");
+        lAnimator.SetTrigger("Die");
+
+        PlayerController_Goal pCon_Goal = GetComponent<PlayerController_Goal>();
+        pCon_Goal.enabled = false;
+
+        playerRigid.gravityScale = 0;
+
+        playerRigid.velocity = Vector2.zero;
     }
 
     private void Jump()

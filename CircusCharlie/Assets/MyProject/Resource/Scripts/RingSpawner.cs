@@ -58,7 +58,7 @@ public class RingSpawner : MonoBehaviour
                     idx -= 5;
                 }
 
-                if(rings[idx].transform.position.x < 10f)
+                if (rings[idx].transform.position.x < 10f)
                 {
                     rings[curIdx].transform.position = new Vector2(Random.Range(10, xPos), 0);
                 }
@@ -67,7 +67,7 @@ public class RingSpawner : MonoBehaviour
                     rings[curIdx].transform.position = new Vector2(rings[idx].transform.position.x + Random.Range(0.5f, xPos), 0);
                 }
 
-                if(curIdx == 0)
+                if (curIdx == 0)
                 {
                     GoldController goldCon = bonusGold.GetComponent<GoldController>();
                     goldCon.ActivateGold();
