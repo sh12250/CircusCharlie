@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 0f;
     public int jumpCount = 0;
 
+    public GameObject joyStickHandle = default;
+
     public AudioSource audioSource = default;
     public AudioClip jumpClip = default;
     public AudioClip deathClip = default;
@@ -22,7 +24,6 @@ public class PlayerController : MonoBehaviour
 
     private Animator pAnimator = default;
     private Animator lAnimator = default;
-
 
     void Start()
     {
@@ -39,27 +40,36 @@ public class PlayerController : MonoBehaviour
             Jump();
         }
 
-        if (Input.GetKey(KeyCode.RightArrow))
+        // if (Input.GetKey(KeyCode.RightArrow))
+        if (joyStickHandle.transform.localPosition.x > 0)
         {
             pAnimator.SetBool("isMove", true);
             lAnimator.SetBool("isRun", true);
         }
-        else if (Input.GetKey(KeyCode.LeftArrow))
+        // else if (Input.GetKey(KeyCode.LeftArrow))
+        else if (joyStickHandle.transform.localPosition.x < 0)
         {
             pAnimator.SetBool("isMove", true);
             lAnimator.SetBool("isBack", true);
         }
 
-        if (Input.GetKeyUp(KeyCode.RightArrow))
+        if (joyStickHandle.transform.localPosition.x == 0)
         {
             pAnimator.SetBool("isMove", false);
             lAnimator.SetBool("isRun", false);
-        }
-        else if (Input.GetKeyUp(KeyCode.LeftArrow))
-        {
-            pAnimator.SetBool("isMove", false);
             lAnimator.SetBool("isBack", false);
         }
+
+        // if (Input.GetKey(KeyCode.RightArrow))
+        //{
+        //    pAnimator.SetBool("isMove", false);
+        //    lAnimator.SetBool("isRun", false);
+        //}
+        // else if (Input.GetKey(KeyCode.LeftArrow))
+        //{
+        //    pAnimator.SetBool("isMove", false);
+        //    lAnimator.SetBool("isBack", false);
+        //}
 
         if (detect == 16)
         {
@@ -94,7 +104,7 @@ public class PlayerController : MonoBehaviour
         {
             pAnimator.SetTrigger("Win");
 
-            audioSource.clip = clearClip; 
+            audioSource.clip = clearClip;
             audioSource.Play();
 
             GameManager.instance.AddScore(GameManager.instance.bonusNum);
@@ -138,7 +148,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Jump()
+    public void Jump()
     {
         audioSource.clip = jumpClip;
         audioSource.Play();

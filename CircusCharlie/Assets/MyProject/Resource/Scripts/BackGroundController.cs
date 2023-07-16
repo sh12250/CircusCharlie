@@ -7,6 +7,8 @@ public class BackGroundController : MonoBehaviour
     public float xLeftEnd = -2560f;
     public float xRightEnd = 2560f;
 
+    public GameObject joyStickHandle = default;
+
     public float speed = 0f;
 
     void Start()
@@ -26,11 +28,13 @@ public class BackGroundController : MonoBehaviour
             GoToTheLeft();
         }
 
-        if (Input.GetKey(KeyCode.RightArrow))
+        // if (Input.GetKey(KeyCode.RightArrow))
+        if (joyStickHandle.transform.localPosition.x > 0)
         {
             transform.Translate(Vector3.left * speed * Time.deltaTime);
         }
-        else if (Input.GetKey(KeyCode.LeftArrow))
+        // else if (Input.GetKey(KeyCode.LeftArrow))
+        else if (joyStickHandle.transform.localPosition.x < 0)
         {
             transform.Translate(Vector3.right * speed * Time.deltaTime);
         }

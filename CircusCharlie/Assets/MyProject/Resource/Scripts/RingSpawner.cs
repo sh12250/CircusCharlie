@@ -8,6 +8,8 @@ public class RingSpawner : MonoBehaviour
     public GameObject ringPrefab = default;
     public GameObject goldPrefab = default;
 
+    public GameObject joyStickHandle = default;
+
     public float timeBetSpawnMin = 0.25f;
     public float timeBetSpawnMax = 2.25f;
     private float timeBetSpawn;
@@ -29,9 +31,12 @@ public class RingSpawner : MonoBehaviour
         rings[0] = Instantiate(ringPrefab, new Vector2(xPos, 0), Quaternion.identity);
         bonusGold = Instantiate(goldPrefab, new Vector2(xPos, -0.5f), Quaternion.identity, rings[0].transform);
 
+        rings[0].GetComponent<RingController>().joyStickHandle = joyStickHandle;
+
         for (int i = 1; i < count; i++)
         {
             rings[i] = Instantiate(bigRingPrefab, new Vector2(rings[i - 1].transform.position.x + Random.Range(0, xPos), 0), Quaternion.identity);
+            rings[i].GetComponent<RingController>().joyStickHandle = joyStickHandle;
         }
 
         lastSpawnTime = 0f;

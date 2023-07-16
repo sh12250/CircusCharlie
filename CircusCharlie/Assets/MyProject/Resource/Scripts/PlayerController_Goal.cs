@@ -11,6 +11,8 @@ public class PlayerController_Goal : MonoBehaviour
     public float jumpForce = 0f;
     public int jumpCount = 0;
 
+    public GameObject joyStickHandle = default;
+
     public AudioSource audioSource = default;
     public AudioClip jumpClip = default;
 
@@ -34,29 +36,38 @@ public class PlayerController_Goal : MonoBehaviour
             Jump();
         }
 
-        if (Input.GetKey(KeyCode.RightArrow))
+        // if (Input.GetKey(KeyCode.RightArrow))
+        if (joyStickHandle.transform.localPosition.x > 0)
         {
             pAnimator.SetBool("isMove", true);
             lAnimator.SetBool("isRun", true);
             transform.Translate(Vector3.right * speed * Time.deltaTime);
         }
-        else if (Input.GetKey(KeyCode.LeftArrow))
+        // else if (Input.GetKey(KeyCode.LeftArrow))
+        else if (joyStickHandle.transform.localPosition.x < 0)
         {
             pAnimator.SetBool("isMove", true);
             lAnimator.SetBool("isBack", true);
             transform.Translate(Vector3.left * speed * Time.deltaTime);
         }
 
-        if (Input.GetKeyUp(KeyCode.RightArrow))
+        if (joyStickHandle.transform.localPosition.x == 0)
         {
             pAnimator.SetBool("isMove", false);
             lAnimator.SetBool("isRun", false);
-        }
-        else if (Input.GetKeyUp(KeyCode.LeftArrow))
-        {
-            pAnimator.SetBool("isMove", false);
             lAnimator.SetBool("isBack", false);
         }
+
+        // if (Input.GetKey(KeyCode.RightArrow))
+        //{
+        //    pAnimator.SetBool("isMove", false);
+        //    lAnimator.SetBool("isRun", false);
+        //}
+        // else if (Input.GetKey(KeyCode.LeftArrow))
+        //{
+        //    pAnimator.SetBool("isMove", false);
+        //    lAnimator.SetBool("isBack", false);
+        //}
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -77,7 +88,7 @@ public class PlayerController_Goal : MonoBehaviour
         jumpCount = 0;
     }
 
-    private void Jump()
+    public void Jump()
     {
         audioSource.clip = jumpClip;
         audioSource.Play();

@@ -6,6 +6,8 @@ public class FirePotController : MonoBehaviour
 {
     public float speed = 0f;
 
+    public GameObject joyStickHandle = default;
+
     private float distance = 35.58f;
 
     void Start()
@@ -23,11 +25,13 @@ public class FirePotController : MonoBehaviour
 
         if (!GameManager.instance.isGameOver)
         {
-            if (Input.GetKey(KeyCode.RightArrow))
+            // if (Input.GetKey(KeyCode.RightArrow))
+            if (joyStickHandle.transform.localPosition.x > 0)
             {
                 transform.Translate(Vector3.left * speed * Time.deltaTime);
             }
-            else if (Input.GetKey(KeyCode.LeftArrow))
+            // else if (Input.GetKey(KeyCode.LeftArrow))
+            else if (joyStickHandle.transform.localPosition.x < 0)
             {
                 transform.Translate(Vector3.right * speed * Time.deltaTime);
             }

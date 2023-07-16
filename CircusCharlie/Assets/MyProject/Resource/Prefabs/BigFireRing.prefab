@@ -50,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ringSpeed: 2
   speed: 5
+  joyStickHandle: {fileID: 7994729574101362314, guid: efadf30c50b27cd5ca146ec5d01ca2b6, type: 3}
 --- !u!58 &8801349954633424068
 CircleCollider2D:
   m_ObjectHideFlags: 0
