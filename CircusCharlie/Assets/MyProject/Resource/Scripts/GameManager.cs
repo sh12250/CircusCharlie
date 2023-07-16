@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
         if (gameData.life == 0)
         {
             gameOverUi.SetActive(true);
-
+            Time.timeScale = 0f;
         }
 
         if (gameOver <= time && gameOverUi.activeInHierarchy)
@@ -93,15 +93,17 @@ public class GameManager : MonoBehaviour
             time += Time.deltaTime;
         }
 
-        if (stageWait <= time && isPlayerDead)
+        if (stageWait <= time && isPlayerDead && gameData.life > 0)
         {
             time = 0f;
             gameData.life -= 1;
             GFunc.LoadScene("StageScene");
         }
 
-        if (stageWait <= time && stageStartUi.activeInHierarchy)
+        if (stageWait <= time && stageStartUi.activeInHierarchy && gameData.life > 0)
         {
+            AudioManager.instance.audioSource.Play();
+
             gameData.score_Stage1 = 0;
 
             time = 0f;
@@ -109,7 +111,7 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 1f;
         }
 
-        if (bonusReduceRate <= time && bonusNum != 0 && !stageStartUi.activeInHierarchy && !isPlayerDead)
+        if (bonusReduceRate <= time && bonusNum != 0 && !stageStartUi.activeInHierarchy && !isPlayerDead && gameData.life > 0)
         {
             time = 0;
             bonusNum -= 10;

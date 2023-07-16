@@ -5,10 +5,15 @@ using UnityEngine;
 public class TitleManager : MonoBehaviour
 {
     public GameData gameData;
+    //public AudioSource titleAudio;
+    //public AudioClip startBGM;
 
     void Start()
     {
-
+        //if (!titleAudio.clip)
+        //{
+        //    titleAudio.clip = startBGM;
+        //}
     }
 
     void Update()
@@ -16,6 +21,7 @@ public class TitleManager : MonoBehaviour
         if (Input.anyKey)
         {
             gameData.life = 3;
+            //titleAudio.Play();
             GFunc.LoadScene("StageScene");
             return;
         }

@@ -10,6 +10,9 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 0f;
     public int jumpCount = 0;
 
+    public AudioSource audioSource = default;
+    public AudioClip jumpClip = default;
+    public AudioClip deathClip = default;
 
     public int score = 0;
     public int detect = 0;
@@ -106,6 +109,12 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.tag.Equals("Dead"))
         {
+            audioSource.clip = deathClip;
+            audioSource.Play();
+
+            AudioManager.instance.audioSource.clip = AudioManager.instance.audioClip_death;
+            AudioManager.instance.audioSource.Play();
+
             Die();
         }
 
@@ -126,6 +135,9 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
+        audioSource.clip = jumpClip;
+        audioSource.Play();
+
         pAnimator.SetBool("isMove", false);
         lAnimator.SetBool("isRun", false);
         lAnimator.SetBool("isBack", false);
