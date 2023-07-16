@@ -11,7 +11,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip audioClip_death;
     public AudioClip audioClip_win;
 
-    void Start()
+    private void Awake()
     {
         if (!instance.IsValid())
         {
@@ -26,6 +26,6 @@ public class AudioManager : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 }

@@ -11,6 +11,11 @@ public class PlayerController_Goal : MonoBehaviour
     public float jumpForce = 0f;
     public int jumpCount = 0;
 
+    public AudioSource audioSource = default;
+    public AudioClip jumpClip = default;
+
+    public bool isClear = false;
+
     private Animator pAnimator = default;
     private Animator lAnimator = default;
 
@@ -59,6 +64,10 @@ public class PlayerController_Goal : MonoBehaviour
         if (collision.collider.tag.Equals("Finish"))
         {
             pAnimator.SetTrigger("Win");
+
+            isClear = true;
+            GameManager.instance.isPlayerClear = isClear;
+
             GameManager.instance.bonusNum = 0;
             return;
         }
@@ -70,6 +79,9 @@ public class PlayerController_Goal : MonoBehaviour
 
     private void Jump()
     {
+        audioSource.clip = jumpClip;
+        audioSource.Play();
+
         pAnimator.SetBool("isMove", false);
         lAnimator.SetBool("isRun", false);
         lAnimator.SetBool("isBack", false);

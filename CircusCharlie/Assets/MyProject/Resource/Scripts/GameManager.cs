@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text stage;
     public TMP_Text life;
     public bool isPlayerDead = false;
+    public bool isPlayerClear = false;
     public bool isGameOver = false;
 
     public GameData gameData;
@@ -48,6 +49,12 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        if (gameData.life == 3)
+        {
+            AudioManager.instance.audioSource.clip = AudioManager.instance.audioClip_win;
+            AudioManager.instance.audioSource.Play();
+        }
+
         Time.timeScale = 0f;
         bestScore.text = string.Format("Best : {0 :00000}", gameData.bestScore_Stage1);
         life.text = string.Format("Life {0}", gameData.life);
@@ -102,6 +109,7 @@ public class GameManager : MonoBehaviour
 
         if (stageWait <= time && stageStartUi.activeInHierarchy && gameData.life > 0)
         {
+            AudioManager.instance.audioSource.clip = AudioManager.instance.audioClip_stageBGM;
             AudioManager.instance.audioSource.Play();
 
             gameData.score_Stage1 = 0;

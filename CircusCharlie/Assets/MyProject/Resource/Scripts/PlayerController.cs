@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public AudioSource audioSource = default;
     public AudioClip jumpClip = default;
     public AudioClip deathClip = default;
+    public AudioClip clearClip = default;
 
     public int score = 0;
     public int detect = 0;
@@ -92,6 +93,10 @@ public class PlayerController : MonoBehaviour
         if (collision.collider.tag.Equals("Finish"))
         {
             pAnimator.SetTrigger("Win");
+
+            audioSource.clip = clearClip; 
+            audioSource.Play();
+
             GameManager.instance.AddScore(GameManager.instance.bonusNum);
             GameManager.instance.bonusNum = 0;
             return;

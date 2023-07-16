@@ -226,6 +226,7 @@ GameObject:
   - component: {fileID: 3993094097651768128}
   - component: {fileID: 7777098848576174037}
   - component: {fileID: -4119718770684309674}
+  - component: {fileID: 679112232409797119}
   m_Layer: 0
   m_Name: Player_RideLion
   m_TagString: Player
@@ -340,6 +341,10 @@ MonoBehaviour:
   playerRigid: {fileID: 3993094097651768128}
   jumpForce: 350
   jumpCount: 0
+  audioSource: {fileID: -4119718770684309674}
+  jumpClip: {fileID: 8300000, guid: 9ad251abd61d27842b97bf2485489c05, type: 3}
+  deathClip: {fileID: 8300000, guid: ea990908adf1049448f47ab4dd379ec7, type: 3}
+  clearClip: {fileID: 8300000, guid: 67ec9799d4536a54bbd06d4c9c4a30fa, type: 3}
   score: 0
   detect: 0
   isDead: 0
@@ -439,3 +444,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &679112232409797119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3993094097651768130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 798fbcd865fd5f045a174afe55a5db43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 3993094096075874219}
+  lion: {fileID: 3993094096864900396}
+  playerRigid: {fileID: 3993094097651768128}
+  speed: 5
+  jumpForce: 350
+  jumpCount: 0
+  audioSource: {fileID: -4119718770684309674}
+  jumpClip: {fileID: 8300000, guid: 9ad251abd61d27842b97bf2485489c05, type: 3}
+  isClear: 0
