@@ -4,16 +4,19 @@ using UnityEngine;
 
 public class TitleManager : MonoBehaviour
 {
+    public GameData gameData;
+
     void Start()
     {
-        
+
     }
 
     void Update()
     {
-        if(Input.anyKey)
+        if (Input.anyKey)
         {
-            GFunc.LoadScene("Stage1Scene");
+            gameData.life = 3;
+            GFunc.LoadScene("StageScene");
             return;
         }
     }

@@ -11,8 +11,6 @@ public class PlayerController_Goal : MonoBehaviour
     public float jumpForce = 0f;
     public int jumpCount = 0;
 
-    public int score = 0;
-
     private Animator pAnimator = default;
     private Animator lAnimator = default;
 
@@ -61,50 +59,13 @@ public class PlayerController_Goal : MonoBehaviour
         if (collision.collider.tag.Equals("Finish"))
         {
             pAnimator.SetTrigger("Win");
-            score += GameManager.instance.bonusNum;
             GameManager.instance.bonusNum = 0;
             return;
         }
 
-        GameManager.instance.AddScore(score);
-        score = 0;
-        jumpCount = 0;
-
         pAnimator.SetBool("isMove", false);
         lAnimator.SetBool("isJump", false);
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag.Equals("Dead"))
-        {
-            Die();
-        }
-
-        if (collision.tag.Equals("Ring"))
-        {
-            score += 50;
-        }
-        if (collision.tag.Equals("Pot"))
-        {
-            score += 150;
-        }
-        if (collision.tag.Equals("Gold"))
-        {
-            score += 500;
-        }
-    }
-    private void Die()
-    {
-        pAnimator.SetTrigger("Die");
-        lAnimator.SetTrigger("Die");
-
-        PlayerController_Goal pCon_Goal = GetComponent<PlayerController_Goal>();
-        pCon_Goal.enabled = false;
-
-        playerRigid.gravityScale = 0;
-
-        playerRigid.velocity = Vector2.zero;
+        jumpCount = 0;
     }
 
     private void Jump()

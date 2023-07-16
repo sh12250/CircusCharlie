@@ -10,10 +10,9 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 0f;
     public int jumpCount = 0;
 
+
     public int score = 0;
     public int detect = 0;
-
-    public float time = 0f;
 
     public bool isDead = false;
 
@@ -80,17 +79,27 @@ public class PlayerController : MonoBehaviour
         isDead = true;
         GameManager.instance.isPlayerDead = isDead;
 
+        PlayerController_Goal pCon_Goal = GetComponent<PlayerController_Goal>();
+        pCon_Goal.enabled = false;
         enabled = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.collider.tag.Equals("Finish"))
+        {
+            pAnimator.SetTrigger("Win");
+            GameManager.instance.AddScore(GameManager.instance.bonusNum);
+            GameManager.instance.bonusNum = 0;
+            return;
+        }
+
         GameManager.instance.AddScore(score);
         score = 0;
-        jumpCount = 0;
 
         pAnimator.SetBool("isMove", false);
         lAnimator.SetBool("isJump", false);
+        jumpCount = 0;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

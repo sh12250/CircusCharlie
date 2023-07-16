@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public GameObject fP_R;
 
     public GameObject stageStartUi;
+    public GameObject gameOverUi;
 
     public TMP_Text score;
     public TMP_Text bestScore;
@@ -25,13 +26,11 @@ public class GameManager : MonoBehaviour
     public bool isGameOver = false;
 
     public GameData gameData;
-    private int scoreNum = 0;
-    private int bestScoreNum = 0;
     public int bonusNum = 5000;
-    public int lifeNum = 3;
 
-    private float bonusReduceRate = 0.3f;
-    private float stageLevel = 5f;
+    private float bonusReduceRate = 0.5f;
+    private float stageWait = 3f;
+    private float gameOver = 5f;
     private float time = 0;
 
     private void Awake()
@@ -50,11 +49,19 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Time.timeScale = 0f;
+        bestScore.text = string.Format("Best : {0 :00000}", gameData.bestScore_Stage1);
+        life.text = string.Format("Life {0}", gameData.life);
     }
 
     void Update()
     {
-        if (lifeNum == 0)
+        if (gameData.life == 0)
+        {
+            gameOverUi.SetActive(true);
+
+        }
+
+        if (gameOver <= time && gameOverUi.activeInHierarchy)
         {
             GameOver();
         }
@@ -62,7 +69,6 @@ public class GameManager : MonoBehaviour
         if (isPlayerDead)
         {
             StopObjects();
-
             RingSpawner rS = FindObjectOfType<RingSpawner>();
             rS.enabled = false;
 
@@ -87,14 +93,17 @@ public class GameManager : MonoBehaviour
             time += Time.deltaTime;
         }
 
-        if (stageLevel <= time && isPlayerDead)
+        if (stageWait <= time && isPlayerDead)
         {
             time = 0f;
-            GFunc.LoadScene("Stage1Scene");
+            gameData.life -= 1;
+            GFunc.LoadScene("StageScene");
         }
 
-        if (stageLevel <= time && stageStartUi.activeInHierarchy)
+        if (stageWait <= time && stageStartUi.activeInHierarchy)
         {
+            gameData.score_Stage1 = 0;
+
             time = 0f;
             stageStartUi.SetActive(false);
             Time.timeScale = 1f;
@@ -133,21 +142,21 @@ public class GameManager : MonoBehaviour
     {
         if (!isGameOver)
         {
-            scoreNum += newScore;
-            score.text = string.Format("Score : {0 :00000}", scoreNum);
-            if (scoreNum > bestScoreNum)
+            gameData.score_Stage1 += newScore;
+            score.text = string.Format("Score : {0 :00000}", gameData.score_Stage1);
+
+            if (gameData.score_Stage1 > gameData.bestScore_Stage1)
             {
-                bestScoreNum = scoreNum;
-                bestScore.text = string.Format("Best : {0 :00000}", bestScoreNum);
+                gameData.bestScore_Stage1 = gameData.score_Stage1;
             }
+
+            bestScore.text = string.Format("Best : {0 :00000}", gameData.bestScore_Stage1);
         }
     }
 
     public void StageRestart()
     {
-        GFunc.LoadScene("Stage1Scene");
-        lifeNum -= 1;
-        score.text = string.Format("Life {0}", lifeNum);
+        GFunc.LoadScene("StageScene");
     }
 
     public void StopObjects()

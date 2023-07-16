@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3765680877365064db6e7d2ad1081605, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
-  life: 3
+  life: 2
   score_Stage1: 0
   score_Stage2: 0
-  bestScore_Stage1: 0
+  bestScore_Stage1: 17600
   bestScore_Stage2: 0
