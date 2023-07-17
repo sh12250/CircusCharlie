@@ -57,6 +57,28 @@ public static partial class GFunc
         return SceneManager.GetActiveScene().name;
     }
 
+    //! 활성화된 현재 씬의 루트 오브젝트를 서치해서 찾아주는 함수
+    public static GameObject GetRootObj(string objName_)
+    {
+        Scene activeScene_ = SceneManager.GetActiveScene();
+        GameObject[] rootObjs_ = activeScene_.GetRootGameObjects();
+
+        GameObject targetObj_ = default;
+        foreach(GameObject rootObj_ in rootObjs_)
+        {
+            if(rootObj_.name.Equals(objName_))
+            {
+                targetObj_ = rootObj_;
+                return targetObj_;
+            }
+            else
+            {
+                continue;
+            }
+        }
+
+    }
+
     //! e두 벡터를 더한다
     public static Vector2 AddVectors(this Vector3 origin, Vector2 addVector)
     {
